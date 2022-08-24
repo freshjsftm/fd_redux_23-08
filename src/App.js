@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import * as ActionCreators from "./actions";
+import * as ActionCreators from "./actions/actionsCounter";
 
 function App(props) {
   const { count, step, incrementDispatch, decrementDispatch, setStepDispatch } = props;
@@ -16,7 +16,7 @@ function App(props) {
   );
 }
 
-const mapStateToProps = (state) => state;
+const mapStateToProps = ({count, step}) => ({count, step});
 
 const mapDispatchToProps = (dispatch) => ({
   incrementDispatch : () => dispatch(ActionCreators.increment()),
