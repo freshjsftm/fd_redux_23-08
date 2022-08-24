@@ -15,3 +15,8 @@ export const deleteTask = (id)=>({
   type:ACTION_TYPES.DELETE_TASK,
   id
 })
+
+// export const setFilterTask = (value)=>({
+//   type:ACTION_TYPES.FILTER_TASK,
+//   value
+// })

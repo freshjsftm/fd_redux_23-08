@@ -16,7 +16,7 @@ function Counter(props) {
   );
 }
 
-const mapStateToProps = ({count, step}) => ({count, step});
+const mapStateToProps = ({counter}) => counter;
 
 const mapDispatchToProps = (dispatch) => ({
   incrementDispatch : () => dispatch(ActionCreators.increment()),
