@@ -1,12 +1,10 @@
-import Counter from "./components/Counter";
-import Todo from "./components/Todo";
-
+import UserForm from './components/UserForm';
 function App(props) {
   return (
     <>
-      <Counter />
-      <hr/><hr/><hr/>
-      <Todo />
+      <UserForm />
+      <hr/><hr/>
+      
     </>
   );
 }
