@@ -2,6 +2,15 @@ import { put } from 'redux-saga/effects';
 import * as API from '../api';
 import * as ActionsUser from '../actions/actionsUser';
 
+export function* deleteUserSaga(action){
+  try {
+    const {data:{data:user}} = yield API.deleteUser(action.payload.id)
+    yield put(ActionsUser.deleteUserSuccess({user}))
+  } catch (error) {
+    yield put(ActionsUser.deleteUserError({error}))
+  }
+}
+
 export function* createUserSaga(action){
   try {
     const {data: {data: [user]}} = yield API.createUser(action.payload.values);

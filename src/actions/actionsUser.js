@@ -1,5 +1,26 @@
 import ACTION_TYPES from './actionTypes';
 
+export const deleteUserRequest = ({id}) => ({
+  type:ACTION_TYPES.DELETE_USER_REQUEST,
+  payload: {id}
+})
+
+export const deleteUserSuccess = ({user}) => ({
+  type:ACTION_TYPES.DELETE_USER_SUCCESS,
+  payload: {user}
+})
+
+export const deleteUserError = ({error}) => ({
+  type:ACTION_TYPES.DELETE_USER_ERROR,
+  payload: {error}
+})
+
+
+
+export const clearUserError = ()=>({
+  type: ACTION_TYPES.CLEAR_USER_ERROR
+})
+
 export const getUsersRequest = ({limit, offset }) => ({
   type:ACTION_TYPES.GET_USERS_REQUEST,
   payload: {limit, offset}
