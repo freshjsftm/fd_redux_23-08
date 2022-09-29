@@ -1,13 +1,14 @@
 import React from 'react'
-import { connect } from 'react-redux'
+import { useDispatch } from 'react-redux'
+import { bindActionCreators } from 'redux';
 import { Formik, Form, Field } from 'formik'
-import * as ActionsUser from '../../actions/actionsUser'
+import * as ActionsUser from '../../actions/actionsUser';
 
 const UserForm = props => {
-  const {createUserRequestDispatch} = props;
+  const { createUserRequest } = bindActionCreators(ActionsUser, useDispatch());
+
   const onSubmit = (values, formikBag) => {
-    //post values -> dispatch action
-    createUserRequestDispatch(values)
+    createUserRequest(values)
     formikBag.resetForm()
   }
   return (
@@ -35,9 +36,4 @@ const UserForm = props => {
   )
 }
 
-const mapDispatchToProps = dispatch => ({
-  createUserRequestDispatch: values =>
-    dispatch(ActionsUser.createUserRequest(values))
-})
-
-export default connect(null, mapDispatchToProps)(UserForm);
+export default UserForm;
