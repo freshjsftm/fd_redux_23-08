@@ -8,7 +8,7 @@ const UserForm = props => {
   const { createUserRequest } = bindActionCreators(ActionsUser, useDispatch());
 
   const onSubmit = (values, formikBag) => {
-    createUserRequest(values)
+    createUserRequest({values})
     formikBag.resetForm()
   }
   return (

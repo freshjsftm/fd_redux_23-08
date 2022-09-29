@@ -1,3 +1,4 @@
+import produce from "immer";
 import ACTION_TYPES from '../actions/actionTypes';
 
 const initialState = {
@@ -6,58 +7,40 @@ const initialState = {
   error:null
 }
 
-function userReducer(state=initialState, action){
-  switch(action.type){
-    case ACTION_TYPES.GET_USERS_REQUEST:{
-      return {
-        ...state,
-        isFetching: true,
-        error:null
-      }
-    }
-    case ACTION_TYPES.GET_USERS_SUCCESS:{
-      const {payload:{users:newUsers}} = action;
-      return {
-        ...state,
-        isFetching:false,
-        users:[...state.users, ...newUsers],
-        error:null
-      }
-    }
-    case ACTION_TYPES.GET_USERS_ERROR:{
-      const {payload:{error}} = action;
-      return {
-        ...state,
-        isFetching:false,
-        error
-      }
-    }
-    case ACTION_TYPES.CREATE_USER_REQUEST:{
-      return {
-        ...state,
-        isFetching:true,
-        error:null
-      }
-    }
-    case ACTION_TYPES.CREATE_USER_SUCCESS:{
-      const {values:user} =action;
-      return {
-        ...state,
-        isFetching:false,
-        users: [...state.users, user],
-        error:null
-      }
-    }
-    case ACTION_TYPES.CREATE_USER_ERROR:{
-      const {error} =action;
-      return {
-        ...state,
-        isFetching:false,
-        error
-      }
-    }
-    default:return state;
-  }
+const handlerRequest = produce((draftState, action)=>{
+  draftState.isFetching=true;
+  draftState.error = null;
+})
+const handlerError = produce((draftState, action)=>{
+  draftState.isFetching=false;
+  draftState.error = action.payload.error;
+})  
+
+const handlers = {
+  [ACTION_TYPES.GET_USERS_REQUEST]:handlerRequest,
+  [ACTION_TYPES.CREATE_USER_REQUEST]:handlerRequest,
+  [ACTION_TYPES.GET_USERS_ERROR]:handlerError,
+  [ACTION_TYPES.CREATE_USER_ERROR]:handlerError,  
+  [ACTION_TYPES.GET_USERS_SUCCESS]:produce((draftState, action)=>{
+    const {payload:{users:newUsers}} = action;
+    draftState.isFetching=false;
+    draftState.error = null;
+    draftState.users.push(...newUsers);
+  }),
+  [ACTION_TYPES.CREATE_USER_SUCCESS]:produce((draftState, action)=>{
+    const {payload:{user}} = action;
+    draftState.isFetching=false;
+    draftState.error = null;
+    draftState.users.push(user);
+  }),
 }
 
+function userReducer(state=initialState, action){
+  const {type} = action;
+  const handler = handlers[type];
+  if(handler){
+    return handler(state, action);
+  }
+  return state;
+}
 export default userReducer;

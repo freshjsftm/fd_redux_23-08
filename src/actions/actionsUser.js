@@ -13,17 +13,17 @@ export const getUsersError = ({error}) => ({
   payload: {error}
 })
 
-export const createUserRequest = (values) => ({
+export const createUserRequest = ({values}) => ({
   type:ACTION_TYPES.CREATE_USER_REQUEST,
-  values
+  payload: {values}
 })
 
-export const createUserSuccess = (values) => ({
+export const createUserSuccess = ({user}) => ({
   type:ACTION_TYPES.CREATE_USER_SUCCESS,
-  values
+  payload: {user}
 })
 
-export const createUserError = (error) => ({
+export const createUserError = ({error}) => ({
   type:ACTION_TYPES.CREATE_USER_ERROR,
-  error
+  payload: {error}
 })
